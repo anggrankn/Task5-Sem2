@@ -1,4 +1,4 @@
-package ru.vsu.cs.course1.tree;
+package ru.vsu.cs.tree;
 
 import java.awt.*;
 import java.io.File;
@@ -8,9 +8,6 @@ import org.jfree.graphics2d.svg.SVGGraphics2D;
 import org.jfree.graphics2d.svg.SVGUtils;
 import ru.vsu.cs.util.DrawUtils;
 
-/**
- * Класс, выполняющий отрисовку дерева на Graphics
- */
 public class BinaryTreePainter {
 
     public static final int TREE_NODE_WIDTH = 70,
@@ -74,14 +71,6 @@ public class BinaryTreePainter {
         );
     }
 
-    /**
-     * Рисование дерева
-     *
-     * @param <T> Тип элементов в дереве
-     * @param tree Дерево
-     * @param gr   Graphics
-     * @return Размеры картинки
-     */
     public static <T extends Comparable<T>> Dimension paint(BinaryTree<T> tree, Graphics gr) {
         Graphics2D g2d = (Graphics2D) gr;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -90,17 +79,8 @@ public class BinaryTreePainter {
         return new Dimension((rootResult == null) ? 0 : rootResult.maxX, (rootResult == null) ? 0 : rootResult.maxY + HORIZONTAL_INDENT);
     }
 
-    /**
-     * Сохранение изображения дерева в SVG-файл
-     *
-     * @param tree Двоичное дерево
-     * @param filename Имя файла
-     * @param backgroundTransparent Оставлять ли прозрачным фон
-     * @throws IOException Возможное исключение
-     */
     public static <T extends Comparable<T>> void saveIntoFile(BinaryTree<T> tree, String filename, boolean backgroundTransparent)
             throws IOException {
-        // первый раз рисуем, только чтобы размеры изображения определить
         SVGGraphics2D g2 = new SVGGraphics2D(1, 1);
         Dimension size = BinaryTreePainter.paint(tree, g2);
         // второй раз рисуем непосредственно для сохранения
@@ -112,17 +92,5 @@ public class BinaryTreePainter {
         BinaryTreePainter.paint(tree, g2);
 
         SVGUtils.writeToSVG(new File(filename), g2.getSVGElement());
-    }
-
-    /**
-     * Сохранение изображения дерева в SVG-файл (с белым фоном)
-     *
-     * @param tree Двоичное дерево
-     * @param filename Имя файла
-     * @throws IOException Возможное исключение
-     */
-    public static <T extends Comparable<T>> void saveIntoFile(BinaryTree<T> tree, String filename)
-            throws IOException {
-        saveIntoFile(tree, filename, false);
     }
 }

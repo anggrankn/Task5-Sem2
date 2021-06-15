@@ -1,13 +1,9 @@
-package ru.vsu.cs.course1.tree.bst;
+package ru.vsu.cs.tree.bst;
 
 import java.util.function.Function;
-import ru.vsu.cs.course1.tree.SimpleBinaryTree;
-import ru.vsu.cs.course1.tree.BinaryTree;
+import ru.vsu.cs.tree.SimpleBinaryTree;
+import ru.vsu.cs.tree.BinaryTree;
 
-/**
- * Класс, реализующий простое (наивное) дерево поиска
- * @param <T>
- */
 public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryTree<T> implements BSTree<T> {
 
     private static class CheckBSTResult<T> {
@@ -61,21 +57,10 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
         return result;
     }
 
-    /**
-     * Проверка, является ли поддерево деревом поиска
-     * @param <T>
-     * @param node Поддерево
-     * @return treu/false
-     */
     public static <T extends Comparable<? super T>> boolean isBST(BinaryTree.TreeNode<T> node) {
         return node == null ? true : isBSTInner(node).result;
     }
 
-    /**
-     * Загрузка дерева из скобочного представления
-     * @param bracketStr
-     * @throws Exception Если переаддное скобочное представление не является деревом поиска
-     */
     @Override
     public void fromBracketNotation(String bracketStr) throws Exception {
         SimpleBinaryTree tempTree = new SimpleBinaryTree(this.fromStrFunc);
@@ -88,18 +73,9 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
         this.size = tempTreeResult.size;
     }
 
-    /**
-     * Рекурсивное добавление значения в поддерево node
-     *
-     * @param node Узел, в который (в него или его поддеревья) добавляем
-     * значение value
-     * @param value Добавляемое значение
-     * @return Старое значение, равное value, если есть
-     */
     private T put(SimpleTreeNode node, T value) {
         int cmp = value.compareTo(node.value);
         if (cmp == 0) {
-            // в узле значение, равное value
             T oldValue = node.value;
             node.value = value;
             return oldValue;
@@ -124,14 +100,6 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
         }
     }
 
-    /**
-     * Рекурсивное удаления значения из поддерева node
-     *
-     * @param node
-     * @param nodeParent Родитель узла
-     * @param value
-     * @return Старое значение, равное value, если есть
-     */
     private T remove(SimpleTreeNode node, SimpleTreeNode nodeParent, T value)
     {
         if (node == null) {
@@ -139,10 +107,8 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
         }
         int cmp = value.compareTo(node.value);
         if (cmp == 0) {
-            // в узле значение, равное value
             T oldValue = node.value;
             if (node.left != null && node.right != null) {
-                // если у node есть и левое и правое поддерево
                 SimpleTreeNode minParent = getMinNodeParent(node.right);
                 if (minParent == null) {
                     node.value = node.right.value;
@@ -154,7 +120,6 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
             } else {
                 SimpleTreeNode child = (node.left != null) ? node.left : node.right;
                 if (nodeParent == null) {
-                    // возможно, если только node == root
                     root = child;
                 } else if (nodeParent.left == node) {
                     nodeParent.left = child;
@@ -171,12 +136,6 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
         }
     }
 
-    /**
-     * Поиск родителя минимально TreeNode в поддереве node
-     *
-     * @param node Поддерево в котором надо искать родителя минимального элемент
-     * @return Узел, содержащий минимальный элемент
-     */
     private SimpleTreeNode getMinNodeParent(SimpleTreeNode node) {
         if (node == null) {
             return null;
@@ -187,8 +146,6 @@ public class SimpleBSTree<T extends Comparable<? super T>> extends SimpleBinaryT
         }
         return parent;
     }
-
-    // Реализация BSTree<T>
 
     @Override
     public T put(T value) {

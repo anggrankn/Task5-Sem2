@@ -1,10 +1,7 @@
-package ru.vsu.cs.course1.tree;
+package ru.vsu.cs.tree;
 
 import java.util.function.Function;
 
-/**
- * Реализация простейшего бинарного дерева
- */
 public class SimpleBinaryTree<T> implements BinaryTree<T> {
 
     protected class SimpleTreeNode implements BinaryTree.TreeNode<T> {
@@ -90,7 +87,6 @@ public class SimpleBinaryTree<T> implements BinaryTree<T> {
     }
 
     private T readValue(String bracketStr, IndexWrapper iw) throws Exception {
-        // пропуcкаем возможные пробелы
         skipSpaces(bracketStr, iw);
         if (iw.index >= bracketStr.length()) {
             return null;
@@ -101,9 +97,9 @@ public class SimpleBinaryTree<T> implements BinaryTree<T> {
             iw.index++;
         }
         while (iw.index < bracketStr.length() && (
-                    quote && bracketStr.charAt(iw.index) != '"' ||
-                    !quote && !Character.isWhitespace(bracketStr.charAt(iw.index)) && "(),".indexOf(bracketStr.charAt(iw.index)) < 0
-               )) {
+                quote && bracketStr.charAt(iw.index) != '"' ||
+                        !quote && !Character.isWhitespace(bracketStr.charAt(iw.index)) && "(),".indexOf(bracketStr.charAt(iw.index)) < 0
+        )) {
             iw.index++;
         }
         if (quote && bracketStr.charAt(iw.index) == '"') {

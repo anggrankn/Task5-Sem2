@@ -30,4 +30,4 @@ setlocal DisableDelayedExpansion
 
 echo "%CP%"
 
-%JAVA% -cp "%CP%" ru.vsu.cs.course1.tree.demo.Program
+%JAVA% -cp "%CP%" Program
