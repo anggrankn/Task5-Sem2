@@ -1,4 +1,6 @@
 # Project exclude paths
 /out/
 /lib/
-/images/*
+/images/
+/TreeSamples. Task5-Sem2.iml/
+/run.bat/*
